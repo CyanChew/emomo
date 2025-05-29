@@ -192,6 +192,8 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
    `calib_scripts/aruco_marker_id0_50mm.pdf`  
    Cut out the marker and paste it onto a piece of cardboard.
 
+   > **Note**: We generated this with `python calib_scripts/generate_calib_marker_pdf.py`
+
 6. **Collect Calibration Images**  
    Run the calibration data collection script:
    ```bash
@@ -200,7 +202,9 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
    - Place the ArUco tag in the robot gripper.
    - Press **Enter** to close the gripper (⚠️ watch your fingers).
    - The robot will automatically move to various poses and capture images from the RealSense cameras.
-   > **Debugging Tips**: If having issues, first check that the Realsense cameras are plugged into the GPU laptop. Then, you can check that the cameras are correctly observing images by running `python envs/utils/cameras.py` (just make sure to update `base1_camera = RealSenseCamera("247122072471", use_depth=1)` and `base2_camera = RealSenseCamera("247122073666", use_depth=1)` with the correct serial numbers in your setup. This will visualize all the camera streams. Finally, check that the NUC/GPU laptop/Kinova are all connected to the Ethernet switch, and that `base_server.py` and `arm_server.py` are running on the NUC side (see [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc)).
+
+   > **Debugging Tips**:
+   If having issues, first check that the Realsense cameras are plugged into the GPU laptop. Then, you can check that the cameras are correctly observing images by running `python envs/utils/cameras.py` (just make sure to update `base1_camera = RealSenseCamera("247122072471", use_depth=1)` and `base2_camera = RealSenseCamera("247122073666", use_depth=1)` with the correct serial numbers in your setup. This will visualize all the camera streams. Finally, check that the NUC/GPU laptop/Kinova are all connected to the Ethernet switch, and that `base_server.py` and `arm_server.py` are running on the NUC side (see [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc)).
 
 7. **Solve for Camera Extrinsics**  
    After running `move_calib.py`, we run the following:
@@ -222,9 +226,14 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
 9. **Visualize Final Point Cloud**  
    Confirm calibration quality:
    ```bash
-   python interactive_scripts/vis_pcl.py
+   python interactive_scripts/vis_pcl.py --env_cfg envs/cfgs/real_<wbc,base_arm>.yaml
    ```
-   This will display the merged point cloud using the calibrated extrinsics.
+   This will display the deprojected and merged point cloud using the extrinsics from `calib_files/`. This point cloud should look well stitched (no obvious gaps). You can adjust the following parameters of the environment config file (`real_<wbc,base_arm>.yaml`) which specifies the point cloud cropping bounds. This is the bounds of the point cloud w.r.t. the base of the arm. 
+   ```bash
+   min_bound: [0.2, -0.5, -0.35]
+   max_bound: [1.0, 0.5, 0.3]
+   ```
+   For instance, we currently set the z-min to be 35cm. below the arm (close to the floor), since the base height is ~37cm, and 30 centimeters above the arm (along the z axis). We also use 20cm. to 1meter in front of the arm (along x), and 50cm. to the left/right of the arm (along y). We found these bounds to work well across the real-world tasks considered.
 
 ---
 
@@ -238,7 +247,7 @@ We support two teleoperation modes:
 
 ##### 1. Base + Arm Mode
 
-This mode allows you to control the arm and mobile base in a decoupled fashion (same as normal Tidybot++), with observations/actions stored slightly differently.
+This mode allows you to control the arm and mobile base in a decoupled fashion (same as normal Tidybot++).
 
 ```bash
 python interactive_scripts/record_real.py --env_cfg envs/cfgs/real_base_arm.yaml
@@ -254,7 +263,12 @@ This mode enables whole-body teleoperation using a [`mink`](https://github.com/k
 python interactive_scripts/record_real.py --env_cfg envs/cfgs/real_wbc.yaml
 ```
 
-> **Debugging Tips**: Ensure that the RealSense cameras are plugged into the GPU laptop, that the NUC/GPU laptop/Kinova are all connected to the Ethernet switch, and that `base_server.py` and `arm_server.py` are running on the NUC side (see [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc)).
+- This script relies on the WBC IK solver in `envs/utils/wbc_ik_solver_real.py`
+  - By default, collision avoidance is disabled. To enable collision avoidance between arm/base/camera mounts, uncomment [this](envs/utils/wbc_ik_solver_real.py#L75). 
+    - We configure the placement of the external camera mounts [here](mj_assets/stanford_tidybot2/tidybot_cam_mounts.xml#L109), which you can update if your setup places camera mounts differently.
+
+> **Debugging Tips**:
+Ensure that the RealSense cameras are plugged into the GPU laptop, that the NUC/GPU laptop/Kinova are all connected to the Ethernet switch, and that `base_server.py` and `arm_server.py` are running on the NUC side (see [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc)).
 
 ---
 
