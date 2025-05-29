@@ -84,7 +84,7 @@ cd homer
 
 Once every shell session on the NUC:
 ```bash
-source set_env.sh # Note, this activates the tidybot2 conda env, which should already be installed following Jimmy's setup.
+source set_env.sh # This activates the tidybot2 conda env, which should already be installed following Jimmy's setup.
 ```
 
 #### 💻 B. GPU Laptop Setup
@@ -192,9 +192,8 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
 5. **Print and Prepare ArUco Marker**  
    Print the file:  
    `calib_scripts/aruco_marker_id0_50mm.pdf`  
-   Cut out the marker and paste it onto a piece of cardboard.
-
    > **Note**: We generated this with `python calib_scripts/generate_calib_marker_pdf.py`
+   Cut out the marker and paste it onto a piece of cardboard.
 
 6. **Collect Calibration Images**  
    Run the calibration data collection script:
@@ -309,14 +308,14 @@ We highly recommend trying teleoperation [in simulation](SIM.md#data-collection)
    - Example usage: [📄 Interface Example](https://tidybot2.github.io/docs/usage/#controlling-the-robot)
 
 6. **Save the Demo**
-   - Tap **"End Episode"** on the phone when complete. (⚠️  Note that upon hitting `End Episode`, the robot automatically attempts to `Reset` to a neutral joint configuration. This is a sweeping motion to straighten out the joints, so it is important to ensure there are no objects or things in the environment that could potentially collide with the arm when you begin to reset.).
+   - Tap **"End Episode"** on the phone when complete.
+     > **Note**: ⚠️  Upon hitting `End Episode`, the robot automatically attempts to `Reset` to a neutral joint configuration. This is a sweeping motion to straighten out the joints, so it is important to ensure there are no objects or things in the environment that could potentially collide with the arm when you press this button.
    - Demos are saved under:  
      ```bash
      data/dev1/demoXXXXX.pkl
      ```
 
-7. **Debugging Tips**
-   - If the script complains that port `5001` is in use:
+> **Debugging Tip**: If the script complains that port `5001` is in use:
      ```bash
      ps aux | grep record_real.py
      kill -9 <PID>
