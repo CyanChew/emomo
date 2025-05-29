@@ -35,7 +35,7 @@ If you plan to use HoMeR in **real (and optionally simulation)**, refer to:
 📄 [`REAL.md`](REAL.md)
 
 This guide covers:
-- Hardwarea and software setup for real-world deployment
+- Hardware and software setup for real-world deployment
 - Real-world data collection and annotation
 - Training and evaluating HoMeR and baselines in real
 
