@@ -186,7 +186,6 @@ python scripts/eval_waypoint_cond.py --model exps/waypoint/cube_wbc_cond/latest.
 ---
 
 ## Data Collection
-- In sim: If on Mac instead of Linux, use **`mjpython`** in place of **`python`** for the following 2 scripts
 
 ### Step 1: Teleoperate and record
 Ex: Cube Task with WBC Action Space
@@ -194,7 +193,9 @@ Ex: Cube Task with WBC Action Space
 - Then:
 ```bash
 source set_env.sh
-python interactive_scripts/record_sim.py --env_cfg envs/cfgs/cube_wbc.yaml # Sim
+python interactive_scripts/record_sim.py --env_cfg envs/cfgs/cube_wbc.yaml # Linux
+# OR
+mjpython interactive_scripts/record_sim.py --env_cfg envs/cfgs/cube_wbc.yaml # Mac
 ```
 ![Teleop Demo](readme_assets/teleop.gif)
 - Install the [XRBrowser](https://apps.apple.com/us/app/xr-browser/id1588029989) iPhone App
@@ -210,13 +211,16 @@ python interactive_scripts/record_sim.py --env_cfg envs/cfgs/cube_wbc.yaml # Sim
   - See [here](https://tidybot2.github.io/docs/usage/#controlling-the-robot) for an example of how the interface works.
 - Press `End Episode` when you have successfully lifted the cube. There will be `stdout` feedback in the Terminal when `Success` is detected so you also know when to stop.
 - Demos saved as: `dev1/demoXXXXX.pkl`
-- Debugging:
-  - If you get this error on Mac: `TypeError: cannot pickle 'weakref' object`, pass `show_images=False` in `record_sim.py`
-  - If the script complains about port `5001` being taken already, ensure no hanging processes are there (run `lsof -i 5001` and kill the hanging processes)
+
+> **Debugging**:
+  - If you run into: `TypeError: cannot pickle 'weakref' object` on Mac, avoid visualizing the images live by changing L24 to `env = MujocoEnv(env_cfg, show_images=False)` in `record_sim.py`
+  - If the script complains about port `5001` being taken already, ensure no hanging processes are there (run `lsof -i 5001` and `kill -9` the hanging processes)
 
 [Optional Sanity Check] Replay demos:
 ```bash
-python interactive_scripts/replay_sim.py --data_dir dev1 # Sim
+python interactive_scripts/replay_sim.py --data_dir dev1 # Linux
+# OR
+mjpython interactive_scripts/replay_sim.py --data_dir dev1 # Mac
 ```
 
 NOTE: We collected 20 demos per simulated task in our experiments.
