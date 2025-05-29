@@ -191,8 +191,10 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
 5. **Print and Prepare ArUco Marker**  
    Print the file:  
    `calib_scripts/aruco_marker_id0_50mm.pdf`  
-   > **Note**: We generated this with `python calib_scripts/generate_calib_marker_pdf.py`
    Cut out the marker and paste it onto a piece of cardboard.
+   > **Note**: We generated this with `python calib_scripts/generate_calib_marker_pdf.py`
+   
+
 
 6. **Collect Calibration Images**  
    Run the calibration data collection script:
