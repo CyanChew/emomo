@@ -1,13 +1,52 @@
 # HoMeR
 
-[![Paper](https://img.shields.io/badge/Paper-%20%F0%9F%93%84-blue)](TODO)  
-[![Website](https://img.shields.io/badge/Website-%F0%9F%8C%90-orange)](TODO)
+[![Paper](https://img.shields.io/badge/Paper-%20%F0%9F%93%84-blue)](https://homer-manip.github.io/assets/paper.pdf)  
+[![Website](https://img.shields.io/badge/Website-%F0%9F%8C%90-orange)](homer-manip.github.io)
 
 ---
 
 ## Overview
 
 **HoMeR** (Hybrid Whole-Body Policies for Mobile Robots) is a hybrid imitation learning framework for mobile manipulation. It combines whole-body control with a hybrid action representation to achieve generalizable and precise robot behavior in both simulation and real-world settings.
+
+
+<table>
+  <tr>
+    <td>
+      <video width="250" controls muted autoplay loop>
+        <source src="https://homer-manip.github.io/media/pillow.mp4" type="video/mp4">
+      </video>
+    </td>
+    <td>
+      <video width="250" controls muted autoplay loop>
+        <source src="https://homer-manip.github.io/media/remote.mp4" type="video/mp4">
+      </video>
+    </td>
+    <td>
+      <video width="250" controls muted autoplay loop>
+        <source src="https://homer-manip.github.io/media/sweeping.mp4" type="video/mp4">
+      </video>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <video width="250" controls muted autoplay loop>
+        <source src="https://homer-manip.github.io/media/cube.mp4" type="video/mp4">
+      </video>
+    </td>
+    <td>
+      <video width="250" controls muted autoplay loop>
+        <source src="https://homer-manip.github.io/media/dishwasher.mp4" type="video/mp4">
+      </video>
+    </td>
+    <td>
+      <video width="250" controls muted autoplay loop>
+        <source src="https://homer-manip.github.io/media/cabinet.mp4" type="video/mp4">
+      </video>
+    </td>
+  </tr>
+</table>
+
 
 ---
 
