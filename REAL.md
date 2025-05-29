@@ -313,10 +313,10 @@ We highly recommend trying teleoperation [in simulation](SIM.md#data-collection)
 
 > **Debugging Tip**: If the script complains that port `5001` is in use:
 
-     ```bash
-     ps aux | grep record_real.py
-     kill -9 <PID>
-     ```
+```bash
+ps aux | grep record_real.py
+kill -9 <PID>
+```
 
 > **Note**: In our experiments, we collected **20 teleoperated demos per real-world task**.
 
