@@ -72,9 +72,8 @@ Ensure that the NUC and GPU Laptop are each connected via ethernet cable to a co
 One-time setup:
 - Clone the repo:
 ```bash
-git clone https://github.com/priyasundaresan/mobile-sphinx-dev.git
-cd mobile-sphinx-dev
-git checkout dev_env
+git clone https://github.com/priyasundaresan/homer.git
+cd homer
 ```
 - Configure constants:
   - In `constants.py`, set `BASE_RPC_HOST` and `ARM_RPC_HOST` to be the ethernet IP address of the NUC. (Check `ifconfig -a`, look for something like `eth0`)
@@ -89,9 +88,8 @@ source set_env.sh # Note, this activates the tidybot2 conda env, which should al
 One-time setup:
 - Set up the repo
 ```bash
-git clone https://github.com/priyasundaresan/mobile-sphinx-dev.git
-cd mobile-sphinx-dev
-git checkout dev_env
+git clone https://github.com/priyasundaresan/homer.git
+cd homer
 cd docker
 ./docker_build.py   # run once
 ```
@@ -122,14 +120,14 @@ Open two terminals on the NUC and run:
 
 Terminal 1:
 ```bash
-cd mobile-sphinx-dev
+cd homer
 source set_env.sh
 python envs/utils/arm_server.py
 ```
 
 Terminal 2:
 ```bash
-cd mobile-sphinx-dev
+cd homer
 source set_env.sh
 python envs/utils/base_server.py  
 ```

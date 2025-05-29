@@ -3,9 +3,8 @@
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/priyasundaresan/mobile-sphinx-dev.git
-cd mobile-sphinx-dev
-git checkout dev_env
+git clone https://github.com/priyasundaresan/homer.git
+cd homer
 ```
 ---
 
@@ -113,7 +112,7 @@ We train all models across `l40s` or `a40` GPUs. The dense policies can be train
 
 ### 1. First, copy the trained checkpoints locally
 ```bash
-rsync -av /path/to/remote/mobile-sphinx-dev/exps/waypoint/* /path/to/local/mobile-sphinx-dev/exps/waypoint/
+rsync -av /path/to/remote/homer/exps/waypoint/* /path/to/local/homer/exps/waypoint/
 ```
 
 ### 2. Run evaluation
