@@ -18,9 +18,9 @@ Use the provided `conda` environments:
 Create the environment with:
 
 ```bash
-conda env create -f mac_env.yml    # if on macOS
+mamba env create -f mac_env.yml    # if on macOS
 # OR
-conda env create -f linux_env.yml  # if on Linux
+mamba env create -f linux_env.yml  # if on Linux
 ```
 
 ### 3. Source environment variables

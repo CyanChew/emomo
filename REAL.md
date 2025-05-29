@@ -20,12 +20,16 @@ Ensure the robot is operable by SSHing into the onboard NUC and running:
 python main.py --teleop --save --output-dir data/demos
 ```
 > **Note**: If this errors, in [`real_env.py`](https://github.com/jimmyyhwu/tidybot2/blob/main/real_env.py#L31) you can comment out these lines to disable camera-streaming and re-run the script to minimally test that the robot itself is teleoperable, ignoring cameras:
-  - `self.base_camera = LogitechCamera(BASE_CAMERA_SERIAL)`
-  - `self.wrist_camera = KinovaCamera()`
-  - `obs['base_image'] = self.base_camera.get_image()`
-  - `obs['wrist_image'] = self.wrist_camera.get_image()`
-  - `self.base_camera.close()`
-  - `self.wrist_camera.close()`
+  ```bash
+  self.base_camera = LogitechCamera(BASE_CAMERA_SERIAL)
+  self.wrist_camera = KinovaCamera()
+  ...
+  obs['base_image'] = self.base_camera.get_image()
+  obs['wrist_image'] = self.wrist_camera.get_image()
+  ...
+  self.base_camera.close()
+  self.wrist_camera.close()
+  ```
 
 See the [data collection guide](https://tidybot2.github.io/docs/usage/#data-collection) for details.
 
