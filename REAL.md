@@ -21,6 +21,7 @@ python main.py --teleop --save --output-dir data/demos
 ```
 > **Debugging Tip**: If this errors, in [`real_env.py`](https://github.com/jimmyyhwu/tidybot2/blob/main/real_env.py#L31) you can comment out these lines to disable camera-streaming and re-run the script to minimally test that the robot itself is teleoperable, ignoring cameras:
   ```bash
+  ...
   self.base_camera = LogitechCamera(BASE_CAMERA_SERIAL)
   self.wrist_camera = KinovaCamera()
   ...
@@ -54,7 +55,7 @@ See the [data collection guide](https://tidybot2.github.io/docs/usage/#data-coll
 - **Optional (Recommended)**  
   - An **Ethernet-to-USB-C adapter** and one extra Ethernet cable, for **wired iPhone teleoperation**. This avoids Wi-Fi instability during data collection in environments with weak or congested networks.
 
-- **Images**  
+- **Full Setup**  
 <img src="readme_assets/hardware_setup.png" alt="Hardware Setup" style="width:50%;"/>
 
 
@@ -151,8 +152,7 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
    Ensure the two Intel RealSense D435 cameras are mounted to the base and have a clear view of the end-effector. Connect them to the **GPU laptop** via USB.
    In our setup, we used one RealSense mounted at the front of the base angled downwards for objects on the floor, and another on a taller stand on the side of the base, for table-height tasks. We connected the cameras using the provided ball mounts that came with the RealSenses, and extra mounting rails identical to those used to create the base.
 
-2. **Ensure Cameras Operational**
-    The easiest way to do this is to open `Realsense Viewer` on Linux, ensure that the cameras are recognized, and that you can toggle RGB/Stereo Mode. You also may be prompted to upgrade the firmware of the cameras in case they are out of date. If you have `librealsense` instealled, you should be able to launch the realsense viewer with `realsense-viewer`. In case you do not, you can pull the `librealsense` Docker image to run a container containing all the necessary dependencies. This is much easier than installing `librealsense` from source:
+2. **Ensure Cameras Operational**: The easiest way to do this is to open Realsense Viewer on Linux, ensure that the cameras are recognized, and that you can toggle RGB/Stereo Mode. You also may be prompted to upgrade the firmware of the cameras in case they are out of date. If you have `librealsense` instealled, you should be able to launch the realsense viewer from the commandline with `realsense-viewer`. In case you do not, you can pull the `librealsense` Docker image to run a container containing all the necessary dependencies. This is much easier than installing `librealsense` from source:
    - `docker pull librealsense/librealsense`
    - `cd docker`
    - `./rs.py`: This is a simple script we provide to launch a Docker container containing the `librealsense` package and enable the necessary USB permissions to access cameras.
@@ -227,7 +227,7 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
    ```bash
    python interactive_scripts/vis_pcl.py --env_cfg envs/cfgs/real_<wbc,base_arm>.yaml
    ```
-   This will display the deprojected and merged point cloud using the extrinsics from `calib_files/`. This point cloud should look well stitched (no obvious gaps). You can adjust the following parameters of the environment config file (`real_<wbc,base_arm>.yaml`) which specifies the point cloud cropping bounds. This is the bounds of the point cloud w.r.t. the base of the arm. 
+   This will display the deprojected and merged point cloud using the extrinsics from `calib_files/`. This point cloud should look well stitched (no obvious gaps). You can adjust the following parameters of the environment config file (`real_<wbc,base_arm>.yaml`) which specifies the point cloud cropping bounds. This is the bounds of the point cloud w.r.t. the mounting plate of the arm. 
    ```bash
    min_bound: [0.2, -0.5, -0.35]
    max_bound: [1.0, 0.5, 0.3]
@@ -312,6 +312,7 @@ We highly recommend trying teleoperation [in simulation](SIM.md#data-collection)
      ```
 
 > **Debugging Tip**: If the script complains that port `5001` is in use:
+
      ```bash
      ps aux | grep record_real.py
      kill -9 <PID>
