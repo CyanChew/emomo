@@ -204,10 +204,31 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
    - Press **Enter** to close the gripper (⚠️ watch your fingers).
    - The robot will automatically move to various poses and capture images from the RealSense cameras.
 
-   > **Debugging Tips**:
-     > If having issues, first check that the Realsense cameras are plugged into the GPU laptop.
-     > Then, you can check that the cameras are correctly observing images by running `python envs/utils/cameras.py` (just make sure to update `base1_camera = RealSenseCamera("247122072471", use_depth=1)` and `base2_camera = RealSenseCamera("247122073666", use_depth=1)` with the correct serial numbers in your setup. This will visualize all the camera streams.
-     > Finally, check that the NUC/GPU laptop/Kinova are all connected to the Ethernet switch, and that `base_server.py` and `arm_server.py` are running on the NUC side (see [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc)).
+> **Debugging Tips**
+>
+> • Check Camera Connection  
+>   Make sure the RealSense cameras are **plugged into the GPU laptop**.
+>
+> • Visualize Camera Streams  
+>   Run the following to verify image streams:  
+>   ```
+>   python envs/utils/cameras.py
+>   ```  
+>   Before running, update the serial numbers:  
+>   ```python
+>   base1_camera = RealSenseCamera("247122072471", use_depth=1)
+>   base2_camera = RealSenseCamera("247122073666", use_depth=1)
+>   ```  
+>   Replace these with the correct values for your setup.
+>
+> • Verify Network Connections  
+>   Ensure the **NUC, GPU laptop, and Kinova arm** are all connected to the **same Ethernet switch**.
+>
+> • Start Servers on the NUC  
+>   Make sure the following are running:  
+>   - `base_server.py`  
+>   - `arm_server.py`  
+>   See [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc) for more info.
 
 7. **Solve for Camera Extrinsics**  
    After running `move_calib.py`, we run the following:
