@@ -166,7 +166,7 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
    Update the following config files with the correct RealSense serial numbers:
    - `envs/cfgs/real_wbc.yaml`
    - `envs/cfgs/real_base_arm.yaml`  
-   📌 Tip: You can get serial numbers using:
+   > **Note:** You can get serial numbers using:
    ```bash
    rs-enumerate-devices | grep Serial
    ```
