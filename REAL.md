@@ -19,7 +19,7 @@ Ensure the robot is operable by SSHing into the onboard NUC and running:
 ```bash
 python main.py --teleop --save --output-dir data/demos
 ```
-> **Note**: If this errors, in [`real_env.py`](https://github.com/jimmyyhwu/tidybot2/blob/main/real_env.py#L31) you can comment out these lines to disable camera-streaming and re-run the script to minimally test that the robot itself is teleoperable, ignoring cameras:
+> **Debugging Tip**: If this errors, in [`real_env.py`](https://github.com/jimmyyhwu/tidybot2/blob/main/real_env.py#L31) you can comment out these lines to disable camera-streaming and re-run the script to minimally test that the robot itself is teleoperable, ignoring cameras:
   ```bash
   self.base_camera = LogitechCamera(BASE_CAMERA_SERIAL)
   self.wrist_camera = KinovaCamera()
@@ -100,7 +100,7 @@ cd docker
 - Configure IP address/constants:
   - In `constants.py`, set `BASE_RPC_HOST` and `ARM_RPC_HOST` to be the ethernet IP address of the GPU laptop. (Check `ifconfig -a`, look for something like `eth0`)
   - Essentially, you need the GPU laptop and the NUC to be on the same subnet. Confirm that the `BASE_RPC_HOST`, `ARM_RPC_HOST` AND `TELEOP_HOST` ip addresses in `constants.py` are on the same subnet (i.e. `192.168.1.X`). 
-  > **Note**: A good sanity check is ensuring you can ping the NUC from the GPU laptop, and vice versa, when all are connected via Ethernet switch.
+  > **Debugging Tip**: A good sanity check is ensuring you can ping the NUC from the GPU laptop, and vice versa, when all are connected via Ethernet switch.
 
 Once every shell session on the GPU laptop:
 ```bash
@@ -120,7 +120,7 @@ First, power on the robot:
 - Ensure that the SLA batteries of the base are fully charged, inserted into the robot base, and that the red adapters are plugged into each other
 - Ensure that the Kinova has been powered on: press/hold the power button until the LED flashes blue once, then release, and wait for it to start blinking. After ~10 seconds, it should flash green, power on, and the gripper should open.
 
-Open two terminals on the NUC and run:
+Open two terminals on the NUC (we suggest `screen` or `tmux`) and run the following.
 
 Terminal 1:
 ```bash
@@ -136,10 +136,8 @@ source set_env.sh
 python envs/utils/base_server.py  
 ```
 
-> **Note**: I typically do this using `screen` or `tmux`
-
 All subsequent commands assume these two processes are running.
-> **Note**: "Voltage too low" warning indicates you may have forgotten to plug in the SLA batteries
+> **Debugging Tip**: "Voltage too low" warning indicates you may have forgotten to plug in the SLA batteries
 
 ---
 
@@ -168,13 +166,17 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
    - `envs/cfgs/real_base_arm.yaml`  
 
 
-   > **Note:** You can get serial numbers using:
+   > **Debugging Tip:** You can get serial numbers using:
 
    ```bash
    rs-enumerate-devices | grep Serial
    ```
    Use the value from `Serial No.`, **not** `ASIC Serial`.
+
+
    OR
+
+
    ```python
    import pyrealsense2 as rs
 
@@ -204,9 +206,9 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
    - The robot will automatically move to various poses and capture images from the RealSense cameras.
 
    > **Debugging Tips**:
-    - If having issues, first check that the Realsense cameras are plugged into the GPU laptop.
-    - Then, you can check that the cameras are correctly observing images by running `python envs/utils/cameras.py` (just make sure to update `base1_camera = RealSenseCamera("247122072471", use_depth=1)` and `base2_camera = RealSenseCamera("247122073666", use_depth=1)` with the correct serial numbers in your setup. This will visualize all the camera streams.
-    - Finally, check that the NUC/GPU laptop/Kinova are all connected to the Ethernet switch, and that `base_server.py` and `arm_server.py` are running on the NUC side (see [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc)).
+    > If having issues, first check that the Realsense cameras are plugged into the GPU laptop.
+    > Then, you can check that the cameras are correctly observing images by running `python envs/utils/cameras.py` (just make sure to update `base1_camera = RealSenseCamera("247122072471", use_depth=1)` and `base2_camera = RealSenseCamera("247122073666", use_depth=1)` with the correct serial numbers in your setup. This will visualize all the camera streams.
+    > Finally, check that the NUC/GPU laptop/Kinova are all connected to the Ethernet switch, and that `base_server.py` and `arm_server.py` are running on the NUC side (see [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc)).
 
 7. **Solve for Camera Extrinsics**  
    After running `move_calib.py`, we run the following:
