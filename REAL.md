@@ -264,7 +264,7 @@ python interactive_scripts/record_real.py --env_cfg envs/cfgs/real_wbc.yaml
 ```
 
 - This script relies on the WBC IK solver in `envs/utils/wbc_ik_solver_real.py`
-  - By default, collision avoidance is disabled. To enable collision avoidance between arm/base/camera mounts, uncomment [this](envs/utils/wbc_ik_solver_real.py#L75). 
+  - By default, collision avoidance is disabled. To enable collision avoidance between arm/base/camera mounts, uncomment [this](envs/utils/wbc_ik_solver_real.py#L75) and comment out [this](envs/utils/wbc_ik_solver_real.py#L76).
     - We configure the placement of the external camera mounts [here](mj_assets/stanford_tidybot2/tidybot_cam_mounts.xml#L109), which you can update if your setup places camera mounts differently.
 
 > **Debugging Tips**:
