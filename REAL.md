@@ -164,8 +164,9 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
 
 3. **Update Camera Configs**  
    Update the following config files with the correct RealSense serial numbers:
-   `envs/cfgs/real_wbc.yaml`
-   `envs/cfgs/real_base_arm.yaml`  
+   - `envs/cfgs/real_wbc.yaml`
+   - `envs/cfgs/real_base_arm.yaml`  
+
 
    > **Note:** You can get serial numbers using:
 
