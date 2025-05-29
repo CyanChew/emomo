@@ -137,7 +137,6 @@ python envs/utils/base_server.py
 ```
 
 All subsequent commands assume these two processes are running.
-> **Debugging Tip**: "Voltage too low" warning indicates you may have forgotten to plug in the SLA batteries
 
 ---
 
@@ -204,32 +203,6 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
    - Press **Enter** to close the gripper (⚠️ watch your fingers).
    - The robot will automatically move to various poses and capture images from the RealSense cameras.
 
-> **Debugging Tips**
->
-> • Check Camera Connection  
->   Make sure the RealSense cameras are **plugged into the GPU laptop**.
->
-> • Visualize Camera Streams  
->   Run the following to verify image streams:  
->   ```
->   python envs/utils/cameras.py
->   ```  
->   Before running, update the serial numbers:  
->   ```python
->   base1_camera = RealSenseCamera("247122072471", use_depth=1)
->   base2_camera = RealSenseCamera("247122073666", use_depth=1)
->   ```  
->   Replace these with the correct values for your setup.
->
-> • Verify Network Connections  
->   Ensure the **NUC, GPU laptop, and Kinova arm** are all connected to the **same Ethernet switch**.
->
-> • Start Servers on the NUC  
->   Make sure the following are running:  
->   - `base_server.py`  
->   - `arm_server.py`  
->   See [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc) for more info.
-
 7. **Solve for Camera Extrinsics**  
    After running `move_calib.py`, we run the following:
    ```bash
@@ -245,7 +218,7 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
      ```bash
      python calib_scripts/refine_calib.py
      ```
-   This performs ICP to align the two camera point clouds and uses the solved transformation to align the extrinsics of base 2 camera relative to base 1 camera in `calib_files/`. It will also visualize the merged point cloud and alignment result. 
+   This performs ICP to align the two camera point clouds and uses the solved transformation to align the extrinsics of base 2 camera relative to base 1 camera in `calib_files/`. It will also visualize the merged point cloud and alignment result. A good alignment result is if the red point cloud and green overlap well and the RMSE is < 2cm.
 
 9. **Visualize Final Point Cloud**  
    Confirm calibration quality:
@@ -442,4 +415,32 @@ python scripts/eval_dense_real.py \
 ```
 
 -----
+### Common Debugging Issues
 
+> **Having issues? Try the following:**
+>
+> • **Check Camera Connection**  
+>   First, always ensure the RealSense cameras are **plugged into the GPU laptop**.
+>   You may need to unplug/re-plug in the USB cables after a few hours of use.
+>
+> • **Verify Camera Streams**  
+>   Run the following to verify image streams:  
+>   ```
+>   python envs/utils/cameras.py
+>   ```  
+>   Before running, update the serial numbers:  
+>   ```python
+>   base1_camera = RealSenseCamera("247122072471", use_depth=1)
+>   base2_camera = RealSenseCamera("247122073666", use_depth=1)
+>   ```  
+>   Remember to replace these values in the script  with the correct values for your setup. 
+>
+> • **Verify Network Connections**  
+>   Ensure the **NUC, GPU laptop, and Kinova arm** are all connected to the **same Ethernet switch**.
+>
+> • **Start Servers on the NUC**  
+>   Make sure the following are running:  
+>   - `base_server.py`  
+>   - `arm_server.py`  
+>   In particular, make sure the SLA batteries are connected if you run into issues starting `base_server.py`.
+>   See [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc) for more info.
