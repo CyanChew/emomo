@@ -420,30 +420,33 @@ python scripts/eval_dense_real.py \
 -----
 ### Common Debugging Issues
 
-> **Having issues? Try the following:**
->
-> • **Check Camera Connection**  
->   First, always ensure the RealSense cameras are **plugged into the GPU laptop**.
->   You may need to unplug/re-plug in the USB cables after a few hours of use.
->
-> • **Verify Camera Streams**  
->   Run the following to verify image streams:  
->   ```
->   python envs/utils/cameras.py
->   ```  
->   Before running, update the serial numbers:  
->   ```python
->   base1_camera = RealSenseCamera("247122072471", use_depth=1)
->   base2_camera = RealSenseCamera("247122073666", use_depth=1)
->   ```  
->   Remember to replace these values in the script  with the correct values for your setup. 
->
-> • **Verify Network Connections**  
->   Ensure the **NUC, GPU laptop, and Kinova arm** are all connected to the **same Ethernet switch**.
->
-> • **Start Servers on the NUC**  
->   Make sure the following are running:  
->   - `base_server.py`  
->   - `arm_server.py`  
->   In particular, make sure the SLA batteries are connected if you run into issues starting `base_server.py`.
->   See [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc) for more info.
+• **Check Camera Connection**  
+  First, always ensure the RealSense cameras are **plugged into the GPU laptop**.
+  You may need to unplug/re-plug in the USB cables after a few hours of use.
+
+• **Verify Camera Streams**  
+  Run the following to verify image streams:  
+  ```
+  python envs/utils/cameras.py
+  ```  
+  Before running, update the serial numbers:  
+  ```python
+  base1_camera = RealSenseCamera("247122072471", use_depth=1)
+  base2_camera = RealSenseCamera("247122073666", use_depth=1)
+  ```  
+  Remember to replace these values in the script  with the correct values for your setup. 
+
+• **Verify Network Connections**  
+  Ensure the **NUC, GPU laptop, and Kinova arm** are all connected to the **same Ethernet switch** and have IP addresses on the same subnet. You should be able to `ping` all devices from each other.
+
+• **Slow/Laggy Teleop**  
+  Slow/laggy teleop is sometimes an issue with a wireless iPhone connection. The wireless connection is generally fine for non-real-time things like using the iPhone as an enabling device for monitoring evaluation rollouts.
+  For teleoperation, we recommend using the wired Ethernet-to-USB-C connection between the ethernet switch/GPU  and iPhone. In that case, update `TELEOP_HOST` in [`constants.py`](constants.py) to use the GPU laptops Ethernet IP address, and ensure that your iPhone is on an IP address on the same subnet (`192.168.1.101` for example).
+
+• **Start Servers on the NUC**  
+  Make sure the following are [running](#prerequisite-start-arm--base-servers-on-the-nuc) before running any teleoperation scripts, eval scripts, or scripts that interface with the robot.
+  - `base_server.py`  
+  - `arm_server.py`  
+
+  In particular, make sure the SLA batteries are connected if you run into issues starting `base_server.py`.
+
