@@ -5,14 +5,14 @@ This README contains all the info for real-robot deployment of HoMeR. We highly 
 ---
 ### Quick Links
 
-- [1. Robot Platform: Tidybot++](#1-robot-platform-tidybot)
-- [2. Hardware Requirements](#2-hardware-requirements)
-- [3. Software Setup](#3-software-setup)
+- [1. Tidybot++ Setup](#1-robot-platform-tidybot)
+- [2. HoMeR Hardware Requirements](#2-hardware-requirements)
+- [3. HoMeR Software Setup](#3-software-setup)
 - [Prerequisite: Start Arm & Base Servers](#prerequisite-start-arm--base-servers-on-the-nuc)
-  - [4. Camera Setup (Calibration)](#4-camera-setup-calibration)
-  - [5. Data Collection](#5-data-collection)
-  - [6. Training](#6-training)
-  - [7. Evaluation](#7-evaluation)
+- [4. Camera Setup (Calibration)](#4-camera-setup-calibration)
+- [5. Data Collection](#5-data-collection)
+- [6. Training](#6-training)
+- [7. Evaluation](#7-evaluation)
 - [Common Debugging Issues](#common-debugging-issues)
 
 ---
