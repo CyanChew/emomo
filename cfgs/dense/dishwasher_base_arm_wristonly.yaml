@@ -1,0 +1,24 @@
+dataset:
+  path: data/dev_dishwasher_base_arm
+  camera_views: wrist_image
+  use_interpolate: 1
+  wbc: 0
+  delta_actions: 1
+  predict_mode: 1
+dp:
+  shift_pad: 6
+  cond_unet:
+    kernel_size: 5
+    use_prop: 1
+  use_ddpm: 0
+num_epoch: 5
+epoch_len: 50000
+use_ema: 1
+ema_tau: 0.01
+batch_size: 64
+lr: 1e-4
+weight_decay: 1e-6
+cosine_schedule: 1
+lr_warm_up_steps: 500
+use_wb: 0
+save_dir: exps/dense/dishwasher_base_arm_delta_wristonly

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mode Annotator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    #frame-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #frame {
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      margin-bottom: 15px;
+    }
+    #annotation-bar {
+      position: relative;
+      width: 80%;
+      height: 12px;
+      background: lightgray;
+      border-radius: 5px;
+      margin: 20px auto;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .interpolated-segment {
+      position: absolute;
+      height: 100%;
+      background-color: rgba(222, 184, 135, 0.8);
+      z-index: 1;
+    }
+    .waypoint-marker {
+      position: absolute;
+      width: 6px;
+      height: 100%;
+      background-color: darkorange;
+      z-index: 2;
+      border-radius: 2px;
+      cursor: ew-resize;
+    }
+    #legend {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+    .legend-box {
+      display: inline-block;
+      width: 20px;
+      height: 10px;
+      margin-right: 5px;
+      border-radius: 2px;
+    }
+    .gray { background-color: lightgray; }
+    .orange { background-color: darkorange; }
+    .light-orange { background-color: rgba(222, 184, 135, 0.8); }
+    #export-button {
+      margin-top: 20px;
+      padding: 10px 15px;
+      font-size: 16px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #export-button:hover {
+      background-color: #0056b3;
+    }
+    #instructions {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    #mode-bar {
+      position: relative;
+      width: 80%;
+      height: 8px;
+      margin: 10px auto 0;
+      border-radius: 4px;
+      display: flex;
+      overflow: hidden;
+    }
+    
+    .mode-segment {
+      flex: 1;
+      height: 100%;
+    }
+    
+    .mode-arm {
+      background-color: #5cb85c; /* green */
+    }
+    
+    .mode-base {
+      background-color: #d9534f; /* red */
+    }
+    
+    .mode-unknown {
+      background-color: #ccc; /* gray fallback */
+    }
+
+
+  </style>
+</head>
+<body>
+  <h2>Interactive Video Annotator</h2>
+  <h3 id="demo-name">Loading...</h3>
+  <div id="instructions">
+    Click and drag on the bar below to create waypoint segments.<br/>
+    Drag the orange handles to adjust waypoints.<br/>
+    Hold <strong>S</strong> while dragging to snap a waypoint handle to the nearest waypoint handle.<br/>
+    Press <strong>Delete</strong> to remove the last segment.<br/>
+    <strong>Export Annotations</strong> to save the annotated demo.<br/>
+  </div>
+
+  <div id="frame-container">
+    <img id="frame" width="1280" height="480">
+  </div>
+
+  <div id="mode-bar"></div>
+  <div id="annotation-bar"></div>
+
+  <div id="legend">
+  <span class="legend-box gray"></span> Dense Mode (Gray)
+  <span class="legend-box orange"></span> Waypoint (Orange)
+  <span class="legend-box light-orange"></span> Interpolated (Light Orange)
+  <br/>
+  <span class="legend-box" style="background-color:#5cb85c;"></span> Arm Teleop
+  <span class="legend-box" style="background-color:#d9534f;"></span> Base Teleop
+  </div>
+
+
+  <button id="export-button">Export Annotations</button>
+
+  <script>
+    let currentFrame = 0;
+    let frameCount = {{ frame_count }};
+    let segments = [];
+    let isDraggingSegment = false;
+    let dragStartFrame = null;
+    let lastScrubFrame = -1;
+    let lastScrubTime = 0;
+    const SCRUB_INTERVAL_MS = 150;
+    let isSnapping = false;
+
+    const annotationBar = document.getElementById("annotation-bar");
+
+    function updateDemoName() {
+      fetch('/get_demo_name')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("demo-name").innerText = data.demo_name;
+        });
+    }
+
+    function updateFrame() {
+      fetch(`/frames/${currentFrame}`)
+        .then(response => response.json())
+        .then(data => {
+          if (!data.error) {
+            document.getElementById("frame").src = data.image;
+          }
+        });
+    }
+
+    function scrubToFrame(e) {
+      const now = Date.now();
+      if (now - lastScrubTime < SCRUB_INTERVAL_MS) return;
+      const rect = annotationBar.getBoundingClientRect();
+      const percent = (e.clientX - rect.left) / annotationBar.offsetWidth;
+      const newFrame = Math.max(0, Math.min(Math.floor(percent * frameCount), frameCount - 1));
+      if (newFrame !== lastScrubFrame) {
+        currentFrame = newFrame;
+        updateFrame();
+        lastScrubFrame = newFrame;
+        lastScrubTime = now;
+      }
+    }
+
+    function updateAnnotationBar() {
+      const bar = annotationBar;
+      bar.innerHTML = "";
+      segments.forEach((seg, idx) => {
+        const left = (seg.start / frameCount) * 100;
+        const width = ((seg.end - seg.start) / frameCount) * 100;
+
+        const interp = document.createElement("div");
+        interp.classList.add("interpolated-segment");
+        interp.style.left = `${left}%`;
+        interp.style.width = `${width}%`;
+        bar.appendChild(interp);
+
+        const createHandle = (type) => {
+          const handle = document.createElement("div");
+          handle.classList.add("waypoint-marker");
+          const frame = type === "start" ? seg.start : seg.end;
+          handle.style.left = `${(frame / frameCount) * 100}%`;
+
+          let isDragging = false;
+
+          handle.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            e.stopPropagation();
+            e.preventDefault();
+          });
+
+          document.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+            const rect = bar.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const percent = x / bar.offsetWidth;
+            let newFrame = Math.max(0, Math.min(Math.floor(percent * frameCount), frameCount - 1));
+
+            if (isSnapping) {
+              const allPoints = segments
+                .flatMap((s, sIdx) => sIdx === idx ? [] : [s.start, s.end]);
+              for (let p of allPoints) {
+                if (Math.abs(p - newFrame) <= 3) {
+                  newFrame = p;
+                  break;
+                }
+              }
+            }
+
+            if (type === "start" && newFrame < seg.end) {
+              seg.start = newFrame;
+            } else if (type === "end" && newFrame > seg.start) {
+              seg.end = newFrame;
+            }
+
+            updateAnnotationBar();
+          });
+
+          document.addEventListener("mouseup", () => {
+            if (isDragging) {
+              isDragging = false;
+              saveAllAnnotations();
+            }
+          });
+
+          return handle;
+        };
+
+        bar.appendChild(createHandle("start"));
+        bar.appendChild(createHandle("end"));
+      });
+    }
+
+    annotationBar.addEventListener("mousemove", scrubToFrame);
+
+    annotationBar.addEventListener("mousedown", (e) => {
+      if (e.target.classList.contains("waypoint-marker")) return;
+      const percent = e.offsetX / annotationBar.offsetWidth;
+      dragStartFrame = Math.floor(percent * frameCount);
+      isDraggingSegment = true;
+    });
+
+    document.addEventListener("mouseup", (e) => {
+      if (!isDraggingSegment) return;
+      const rect = annotationBar.getBoundingClientRect();
+      const percent = (e.clientX - rect.left) / annotationBar.offsetWidth;
+      const dragEndFrame = Math.floor(percent * frameCount);
+      const start = Math.min(dragStartFrame, dragEndFrame);
+      const end = Math.max(dragStartFrame, dragEndFrame);
+      if (start !== end) {
+        segments.push({ start, end });
+        saveAllAnnotations();
+        updateAnnotationBar();
+      }
+      isDraggingSegment = false;
+    });
+
+    function saveAllAnnotations() {
+      fetch('/save_annotation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(segments.map(seg => ({ type: 'range', start: seg.start, end: seg.end })))
+      }).then(res => res.json()).then(data => console.log("Annotations updated", data));
+    }
+
+    function exportAnnotations() {
+      fetch('/export_annotations')
+        .then(response => {
+          if (response.ok) {
+            alert("Saved annotations! Refresh to load next demo...");
+          }
+        });
+    }
+
+    function updateModeBar() {
+      fetch('/get_teleop_modes')
+        .then(response => response.json())
+        .then(data => {
+          const modes = data.teleop_modes;
+          const bar = document.getElementById("mode-bar");
+          bar.innerHTML = "";
+    
+          for (let i = 0; i < frameCount; i++) {
+            const seg = document.createElement("div");
+            seg.classList.add("mode-segment");
+    
+            if (modes[i] === "arm") {
+              seg.classList.add("mode-arm");
+            } else if (modes[i] === "base") {
+              seg.classList.add("mode-base");
+            } else {
+              seg.classList.add("mode-unknown");
+            }
+    
+            bar.appendChild(seg);
+          }
+        });
+    }
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+      updateDemoName();
+      updateFrame();
+      updateAnnotationBar();
+      updateModeBar();
+      document.getElementById("export-button").addEventListener("click", exportAnnotations);
+
+      window.addEventListener("keydown", function (e) {
+        if (e.key === "Delete" || e.key === "Backspace") {
+          if (segments.length > 0) {
+            segments.pop();
+            updateAnnotationBar();
+            saveAllAnnotations();
+          }
+        }
+        if (e.key === "s" || e.key === "S") {
+          isSnapping = true;
+        }
+      });
+
+      window.addEventListener("keyup", function (e) {
+        if (e.key === "s" || e.key === "S") {
+          isSnapping = false;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

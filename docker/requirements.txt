@@ -1,0 +1,46 @@
+### For sim
+--index-url https://download.pytorch.org/whl/cu124
+torch
+torchvision
+torchaudio
+
+--extra-index-url https://pypi.org/simple
+mink
+pyrallis
+tabulate
+termcolor
+imageio
+colorama
+pandas
+open3d
+spatialmath-python
+wandb
+diffusers
+fore
+pyqt5
+
+### Below are for real
+pyrealsense2 
+numpy==1.26.4
+threadpoolctl==3.5.0  # Limit numpy multithreading
+scipy==1.12.0
+opencv-python==4.9.0.80
+h5py==3.11.0
+tqdm==4.66.2
+notebook==7.1.1
+matplotlib==3.8.4
+
+# Robotics
+mujoco==3.2.4
+pin==2.7.0
+ruckig==0.12.2
+
+# Communication
+flask==3.0.2
+flask_socketio==5.3.6
+pyzmq==25.1.2
+redis==5.0.6
+
+# Mobile base
+phoenix6==24.3.0
+pygame==2.5.2
