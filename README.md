@@ -1,7 +1,7 @@
 # HoMeR
 
 [![Paper](https://img.shields.io/badge/Paper-%20%F0%9F%93%84-blue)](https://homer-manip.github.io/assets/paper.pdf)  
-[![Website](https://img.shields.io/badge/Website-%F0%9F%8C%90-orange)](homer-manip.github.io)
+[![Website](https://img.shields.io/badge/Website-%F0%9F%8C%90-orange)](https://homer-manip.github.io)
 
 ---
 
