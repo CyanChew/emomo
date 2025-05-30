@@ -45,7 +45,7 @@ This guide covers:
 
 ### 🤖 Real-World
 
-If you plan to use HoMeR in **real (and optionally simulation)**, refer to:
+If you plan to use HoMeR in **real**, refer to:
 
 📄 [`REAL.md`](REAL.md)
 
