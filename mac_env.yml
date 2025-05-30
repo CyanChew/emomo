@@ -24,6 +24,7 @@ dependencies:
   - wheel=0.37.1=pyhd3eb1b0_0
   - xz=5.2.5=h1a28f6b_1
   - zlib=1.2.12=h5a0b063_2
+  - colorama
   - pip:
       - absl-py==1.4.0
       - accelerate==0.15.0
@@ -230,6 +231,7 @@ dependencies:
       - retrying==1.3.4
       - robosuite==1.5.0
       - rsa==4.9
+      - ruckig
       - safetensors==0.4.3
       - scikit-image==0.24.0
       - scikit-learn==1.4.2

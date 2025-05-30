@@ -32,13 +32,13 @@ if __name__ == "__main__":
     cv2.imshow('obs', cv2.cvtColor(obs['base1_image'], cv2.COLOR_BGR2RGB))
     cv2.waitKey(0)
 
-    #merged_points, merged_colors = pcl_from_obs(obs, env.cfg)
+    merged_points, merged_colors = pcl_from_obs(obs, env.cfg)
 
-    #print("xmin, xmax:", np.amin(merged_points[:,0]), np.amax(merged_points[:,0]))
-    #print("ymin, ymax:", np.amin(merged_points[:,1]), np.amax(merged_points[:,1]))
-    #print("zmin, zmax:", np.amin(merged_points[:,2]), np.amax(merged_points[:,2]))
+    print("xmin, xmax:", np.amin(merged_points[:,0]), np.amax(merged_points[:,0]))
+    print("ymin, ymax:", np.amin(merged_points[:,1]), np.amax(merged_points[:,1]))
+    print("zmin, zmax:", np.amin(merged_points[:,2]), np.amax(merged_points[:,2]))
 
-    #point_cloud = o3d.geometry.PointCloud()
-    #point_cloud.points = o3d.utility.Vector3dVector(merged_points)
-    #point_cloud.colors = o3d.utility.Vector3dVector(merged_colors)
-    #o3d.visualization.draw_geometries([point_cloud], window_name="Point Cloud Viewer")
+    point_cloud = o3d.geometry.PointCloud()
+    point_cloud.points = o3d.utility.Vector3dVector(merged_points)
+    point_cloud.colors = o3d.utility.Vector3dVector(merged_colors)
+    o3d.visualization.draw_geometries([point_cloud], window_name="Point Cloud Viewer")
