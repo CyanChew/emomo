@@ -272,7 +272,9 @@ python interactive_scripts/record_real.py --env_cfg envs/cfgs/real_base_arm.yaml
 ---
 
 ##### 2. Whole-Body Mode (HoMeR)
-![Demo](readme_assets/teleop_real.gif)
+| ![Demo](readme_assets/teleop_real.gif) |
+|:--:|
+| *Whole-Body Teleoperation* |
 
 This mode enables whole-body teleoperation using a [`mink`](https://github.com/kevinzakka/mink)-based IK solver for both the full kinematic chain of the base + arm.
 
@@ -284,7 +286,9 @@ python interactive_scripts/record_real.py --env_cfg envs/cfgs/real_wbc.yaml
   - By default, collision avoidance is disabled. To enable collision avoidance between arm/base/camera mounts, uncomment [this](envs/utils/wbc_ik_solver_real.py#L75) and comment out [this](envs/utils/wbc_ik_solver_real.py#L76).
     - We configure the placement of the external camera mounts [here](mj_assets/stanford_tidybot2/tidybot_cam_mounts.xml#L109), which you can update if your setup places camera mounts differently.
 
-![Demo](readme_assets/teleop_collision.gif)
+| ![Demo](readme_assets/teleop_collision.gif) |
+|:--:|
+| *Whole-Body Teleoperation w/ Self-Collision Avoidance* |
 
 > **Debugging Tips**:
 Ensure that the RealSense cameras are plugged into the GPU laptop, that the NUC/GPU laptop/Kinova are all connected to the Ethernet switch, and that `base_server.py` and `arm_server.py` are running on the NUC side (see [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc)).
