@@ -150,7 +150,7 @@ source set_env.sh
 python envs/utils/base_server.py  
 ```
 
-All subsequent commands assume these two processes are running.
+These are the only processes that need to be run on the NUC, and all subsequent commands (run on the GPU laptop) assume these servers are started on the NUC.
 
 ---
 
@@ -210,6 +210,8 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
 
 
 6. **Collect Calibration Images**  
+   Before running teleoperation, ensure the **NUC is running both the arm and base servers**.  
+   (Refer back to the [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc))
    Run the calibration data collection script:
    ```bash
    python calib_scripts/move_calib.py
@@ -253,6 +255,8 @@ To enable accurate multi-view point clouds as in our setup, you must calibrate t
 
 #### 🕹️ A. Teleoperation
 
+Before running teleoperation, ensure the **NUC is running both the arm and base servers**.  
+(Refer back to the [Shared Prerequisite](#prerequisite-start-arm--base-servers-on-the-nuc))
 We support two teleoperation modes:
 
 ---
