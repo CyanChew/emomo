@@ -9,18 +9,10 @@
 
 **HoMeR** (Hybrid Whole-Body Policies for Mobile Robots) is a hybrid imitation learning framework for mobile manipulation. It combines whole-body control with a hybrid action representation to achieve generalizable and precise robot behavior in both simulation and real-world settings.
 
-<table>
-  <tr>
-    <td><img src="media/pillow.gif" width="250"></td>
-    <td><img src="media/remote.gif" width="250"></td>
-    <td><img src="media/sweeping.gif" width="250"></td>
-  </tr>
-  <tr>
-    <td><img src="media/cube.gif" width="250"></td>
-    <td><img src="media/dishwasher.gif" width="250"></td>
-    <td><img src="media/cabinet.gif" width="250"></td>
-  </tr>
-</table>
+| ![](media/pillow.gif) | ![](media/remote.gif) | ![](media/sweeping.gif) |
+|:---:|:---:|:---:|
+| ![](media/cube.gif) | ![](media/dishwasher.gif) | ![](media/cabinet.gif) |
+
 
 ---
 
