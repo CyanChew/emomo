@@ -35,6 +35,13 @@ source set_env.sh
 ## Training
 
 ### 1. Download Datasets
+You can download all simulated and real-world datasets as follows:
+```bash
+wget https://download.cs.stanford.edu/juno/homer/data.tar.zst
+tar --use-compress-program=unzstd -xvf data.tar.zst
+```
+
+Make sure that `homer/data` now contains datasets such as `homer/data/dev_<cube/dishwasher/cabinet>_<wbc/base_arm>`.
 
 ### 2. Training
 
@@ -116,6 +123,14 @@ rsync -av /path/to/remote/homer/exps/waypoint/* /path/to/local/homer/exps/waypoi
 ```
 
 ### 2. Run evaluation
+#### Download Pre-trained Checkpoints 
+You can download all checkpoints from:
+```bash
+wget https://download.cs.stanford.edu/juno/homer/exps.tar.zst
+tar --use-compress-program=unzstd -xvf exps.tar.zst
+```
+
+Make sure that `homer/exps` now contains subfolders `waypoint` and `dense` with checkpoints per task.
 
 #### Sim Tasks
 
