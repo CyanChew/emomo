@@ -130,11 +130,11 @@ python scripts/eval_hybrid.py -w exps/waypoint/cabinet_base_arm/latest.pt -d exp
 ```
 - DP-B+A:
 ```bash
-python scripts/eval_dense.py -d exps/dense/cabinet_base_arm_delta_allcamsonly/latest.pt --num_episode 20 -e envs/cfgs/open_base_arm.yaml
+python scripts/eval_dense.py -d exps/dense/cabinet_base_arm_delta_allcams/latest.pt --num_episode 20 -e envs/cfgs/open_base_arm.yaml
 ```
 - DP-WBC:
 ```bash
-python scripts/eval_dense.py -d exps/dense/cabinet_wbc_delta_allcamsonly/latest.pt --num_episode 20 -e envs/cfgs/open_wbc.yaml
+python scripts/eval_dense.py -d exps/dense/cabinet_wbc_delta_allcams/latest.pt --num_episode 20 -e envs/cfgs/open_wbc.yaml
 ```
 
 Open Dishwasher
@@ -148,11 +148,11 @@ python scripts/eval_hybrid.py -w exps/waypoint/dishwasher_base_arm/latest.pt -d 
 ```
 - DP-B+A:
 ```bash
-python scripts/eval_dense.py -d exps/dense/dishwasher_base_arm_delta_allcamsonly/latest.pt --num_episode 20 -e envs/cfgs/dishwasher_base_arm.yaml
+python scripts/eval_dense.py -d exps/dense/dishwasher_base_arm_delta_allcams/latest.pt --num_episode 20 -e envs/cfgs/dishwasher_base_arm.yaml
 ```
 - DP-WBC:
 ```bash
-python scripts/eval_dense.py -d exps/dense/dishwasher_wbc_delta_allcamsonly/latest.pt --num_episode 20 -e envs/cfgs/dishwasher_wbc.yaml
+python scripts/eval_dense.py -d exps/dense/dishwasher_wbc_delta_allcams/latest.pt --num_episode 20 -e envs/cfgs/dishwasher_wbc.yaml
 ```
 
 Cube
@@ -166,11 +166,11 @@ python scripts/eval_waypoint.py -w exps/waypoint/cube_base_arm/latest.pt --num_e
 ```
 - DP-B+A:
 ```bash
-python scripts/eval_dense.py -d exps/dense/cube_base_arm_delta_allcamsonly/latest.pt --num_episode 20 -e envs/cfgs/cube_base_arm.yaml
+python scripts/eval_dense.py -d exps/dense/cube_base_arm_delta_allcams/latest.pt --num_episode 20 -e envs/cfgs/cube_base_arm.yaml
 ```
 - DP-WBC:
 ```bash
-python scripts/eval_dense.py -d exps/dense/cube_wbc_delta_allcamsonly/latest.pt --num_episode 20 -e envs/cfgs/cube_wbc.yaml
+python scripts/eval_dense.py -d exps/dense/cube_wbc_delta_allcams/latest.pt --num_episode 20 -e envs/cfgs/cube_wbc.yaml
 ```
 - HoMeR-Cond: 
 ```bash
