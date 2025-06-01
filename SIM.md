@@ -117,20 +117,22 @@ We train all models across `l40s` or `a40` GPUs. The dense policies can be train
 
 ## Evaluation
 
-### 1. First, copy the trained checkpoints locally
-```bash
-rsync -av /path/to/remote/homer/exps/waypoint/* /path/to/local/homer/exps/waypoint/
-```
-
-### 2. Run evaluation
-#### Download Pre-trained Checkpoints 
-You can download all checkpoints from:
+### 1. Download checkpoints locally
+You can download all pre-trained checkpoints from:
 ```bash
 wget https://download.cs.stanford.edu/juno/homer/exps.tar.zst
 tar --use-compress-program=unzstd -xvf exps.tar.zst
 ```
+OR, if you trained checkpoints using the procedure above, use:
+
+```bash
+rsync -av /path/to/remote/homer/exps/waypoint/* /path/to/local/homer/exps/waypoint/
+rsync -av /path/to/remote/homer/exps/dense/* /path/to/local/homer/exps/dense/
+```
 
 Make sure that `homer/exps` now contains subfolders `waypoint` and `dense` with checkpoints per task.
+
+### 2. Run evaluation
 
 #### Sim Tasks
 
