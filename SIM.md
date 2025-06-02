@@ -41,7 +41,7 @@ cd /path/to/local/homer
 mkdir data
 cd data
 ```
-Then, to download any of our pre-collected datasets for sim tasks, you can use the following, where `task` is one of [`cube`, `dishwasher`, `cabinet`] and `action_space` is one of [`wbc` (HoMeR) or `base_arm`]:
+Then, to download any of our pre-collected datasets for sim tasks, you can use the following, where `task` is one of [`cube`, `dishwasher`, `cabinet`] and `action_space` is one of [`wbc` (HoMeR) or `base_arm` (baselines)]:
 ```bash
 wget https://download.cs.stanford.edu/juno/homer/data/dev_<task>_<action_space>.tar.zst
 tar --use-compress-program=unzstd -xvf dev_<task>_<action_space>.tar.zst
