@@ -43,7 +43,7 @@ cd data
 ```
 Then, to download any of our pre-collected datasets for sim tasks, you can use the following, where `task` is one of [`cube`, `dishwasher`, `cabinet`] and `action_space` is one of [`wbc` (HoMeR) or `base_arm` (baselines)]:
 ```bash
-wget https://download.cs.stanford.edu/juno/homer/data/dev_<task>_<action_space>.tar.zst
+wget --no-check-certificate https://download.cs.stanford.edu/juno/homer/data/dev_<task>_<action_space>.tar.zst
 tar --use-compress-program=unzstd -xvf dev_<task>_<action_space>.tar.zst
 ```
 Locally, `homer/data` should now contain datasets such as `homer/data/dev_<cube/dishwasher/cabinet>_<wbc/base_arm>`.
@@ -139,10 +139,10 @@ cd /path/to/local/homer
 mkdir -p exps/dense
 mkdir -p exps/waypoint
 cd exps/waypoint
-wget https://download.cs.stanford.edu/juno/homer/exps/waypoint/<task>_<action_space>.zst
+wget --no-check-certificate https://download.cs.stanford.edu/juno/homer/exps/waypoint/<task>_<action_space>.zst
 tar --use-compress-program=unzstd -xvf <task>_<action_space>.zst
 cd ../../dense 
-wget https://download.cs.stanford.edu/juno/homer/exps/dense/<task>_<action_space>_delta_allcams.zst
+wget --no-check-certificate https://download.cs.stanford.edu/juno/homer/exps/dense/<task>_<action_space>_delta_allcams.zst
 tar --use-compress-program=unzstd -xvf <task>_<action_space>_delta_allcams.zst
 ```
 
