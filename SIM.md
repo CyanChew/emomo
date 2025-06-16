@@ -139,11 +139,11 @@ cd /path/to/local/homer
 mkdir -p exps/dense
 mkdir -p exps/waypoint
 cd exps/waypoint
-wget https://download.cs.stanford.edu/juno/homer/exps/waypoint/<task>_<action_space>.tar.zst
-tar --use-compress-program=unzstd -xvf <task>_<action_space>.tar.zst
+wget https://download.cs.stanford.edu/juno/homer/exps/waypoint/<task>_<action_space>.zst
+tar --use-compress-program=unzstd -xvf <task>_<action_space>.zst
 cd ../../dense 
-wget https://download.cs.stanford.edu/juno/homer/exps/dense/<task>_<action_space>_delta_allcams.tar.zst
-tar --use-compress-program=unzstd -xvf <task>_<action_space>_delta_allcams.tar.zst
+wget https://download.cs.stanford.edu/juno/homer/exps/dense/<task>_<action_space>_delta_allcams.zst
+tar --use-compress-program=unzstd -xvf <task>_<action_space>_delta_allcams.zst
 ```
 
 Make sure that `homer/exps` now contains subfolders `waypoint` and `dense` with checkpoints per task.
