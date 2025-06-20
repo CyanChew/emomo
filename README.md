@@ -43,7 +43,8 @@ This guide covers:
 
 ---
 
-##TODO（For EMO project）:
+
+## Todo（For EMO project）:
 对于dishwasher任务：采集-20 to 20度的位置角度不同的正对目标物体的数据训练一手，base的位置和角度可以在/envs/common_mj_env.py 中按照以下说明内容进行修改：
 def reset(self):                              
         # Initialize base at origin
